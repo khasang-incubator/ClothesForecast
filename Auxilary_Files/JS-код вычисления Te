@@ -1,0 +1,86 @@
+function Met_Lg($x) {
+    if ($x == 0) $Result = '0';
+    else
+        $Result = log10($x);
+    return $Result;
+}
+
+function Met_E_func($t) { // hPa
+    $Eo = 6.107;
+    $a = 7.63;
+    $b = 241.9;
+    $Result = $Eo * pow(10, ($a * $t / ($b + $t)));
+    $Result = Met_RoundTo($Result, 2);
+    return $Result;
+}
+
+function Met_f_func($t, $td) { // %
+    if (isset($td) && $td !== "") {
+        $Eo = Met_E_func($t);
+        $E = Met_E_func($td);
+        if ($Eo > 0)
+            $Result = round(100 * $E / $Eo);
+        else $Result = "";
+        if ($Result > 100) $Result = 100;
+    } else $Result = "";
+    return $Result;
+}
+
+function Met_Td_func($t, $f_percent) { // C
+    $Eo = 6.107;
+    $a = 7.63;
+    $b = 241.9;
+    $e = Met_E_func($t) * $f_percent / 100;
+    $Tempo = Met_Lg($e / $Eo);
+    $Result = $b * $Tempo / ($a - $Tempo);
+    $Result = Met_RoundTo($Result, 1);
+    return $Result;
+}
+
+
+function Met_s_func($e, $p) { // g/g
+    $Result = 0.622 * $e / ($p - 0.378 * $e);
+    return $Result;
+}
+
+function Met_Tv_func($T, $s) { // K
+    $Result = T * (1 + 0.608 * s);
+    return $Result;
+}
+
+function Met_WindChill($f, $mph) { // °F, MPH
+    $WC = 35.74 + 0.6125 * $f - 35.75 * pow($mph, 0.16) + 0.4275 * $f * pow($mph, 0.16);
+    return $WC;
+}
+
+function Met_F_to_C($f) {
+    $c = 0.55 * ($f - 32);
+    return $c;
+}
+
+function Met_MPS_to_MPH($mps) {
+    $mph = $mps * 2.2369;
+    return $mph;
+}
+
+
+function Met_Te_func($t, $td, $p, $v = 0) { // C, C, hPa, m/s
+    $e = Met_E_func($td);
+    $s = Met_s_func($e, $p);
+    $dt = 2500 * $s;
+    if ($dt > 18) $dt = $dt - 18;
+    else $dt = 0;
+    //$te = round($t + $dt) ;
+    if ($v > 0) {
+        $mps = 0.5 * $v;
+        $mph = Met_MPS_to_MPH($mps);
+        $f = Met_C_to_F($t);
+        $WC = Met_WindChill($f, $mph);
+        $Result = round(Met_F_to_C($WC));
+        //var_dump($mps, $mph, $f, $WC, $Result);
+        //exit;
+    } else $Result = $t;
+    $Result = round($Result + $dt);
+    if ($Result > 0) $Result = "+".$Result;
+    return $Result;
+}
