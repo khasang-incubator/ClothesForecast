@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!etCityName.getText().toString().trim().isEmpty()) {
-                    new FetchForecastTask().execute(etCityName.getText().toString());
+                    new FetchForecastTask(etCityName.getText().toString()).execute();
                 } else {
                     Toast.makeText(MainActivity.this, "Enter City Name", Toast.LENGTH_SHORT).show();
                 }
@@ -49,16 +50,34 @@ public class MainActivity extends AppCompatActivity {
 
     private void onResponseReceived(String response) {
         tvResponse.setText(response);
+
+        Gson gson = new Gson();
+        WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
+        Coordinate coordinate = weatherResponse.getCoord();
+        Logger.d(String.format("coord: (%f %f)", coordinate.getLon(), coordinate.getLat()));
+        Weather weather = weatherResponse.getWeather().get(0);
+        Logger.d(String.format("id: %d\nmain: %s\ndesc: %s\nicon: %s",
+                weather.getId(), weather.getMain(), weather.getDescription(), weather.getIcon()));
     }
 
-    private class FetchForecastTask extends AsyncTask<String, Void, String> {
+    private class FetchForecastTask extends AsyncTask<Void, Void, String> {
+        private String cityName;
+        private String request;
+
+        public FetchForecastTask(String cityName) {
+            this.cityName = cityName;
+        }
 
         @Override
-        protected String doInBackground(String... params) {
-            String cityName = params[0];
+        protected void onPreExecute() {
+            request = RequestMaker.getWeatherFor(cityName);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
             String response = null;
             try {
-                response = new String(getUrlBytes(RequestMaker.getForecastFor(cityName)));
+                response = new String(getUrlBytes(request));
                 Logger.d(response);
             } catch (IOException e) {
                 e.printStackTrace();

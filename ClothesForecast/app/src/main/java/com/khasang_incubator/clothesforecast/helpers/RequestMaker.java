@@ -31,6 +31,7 @@ public class RequestMaker {
                 .appendQueryParameter("lang", Locale.getDefault().toString())
                 .appendQueryParameter("APPID", AppVariables.API_KEY)
                 .build().toString();
+        Logger.d(request);
         return request;
     }
 }
