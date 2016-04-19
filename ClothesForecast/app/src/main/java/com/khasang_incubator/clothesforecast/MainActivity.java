@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.khasang_incubator.clothesforecast.helpers.Adviser;
-import com.khasang_incubator.clothesforecast.helpers.Calculator;
+import com.khasang_incubator.clothesforecast.helpers.CalcHelper;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
 
@@ -52,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void onResponseReceived(String response) {
         Adviser adviser = new Adviser();
-        Calculator calculator = new Calculator();
+        CalcHelper calculator = new CalcHelper();
 
-        tvResponse.setText(adviser.getCollection(calculator.getEffectiveTemperature()));
+        tvResponse.setText(adviser.getCollection(calculator.getEffectiveTemperature(7.2, 65, 3)));
+        Logger.d(String.format("Effective temperature: %s", calculator.getEffectiveTemperature(6.7, 75, 3)));
 
         Gson gson = new Gson();
 //        WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
