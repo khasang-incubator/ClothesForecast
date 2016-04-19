@@ -14,4 +14,9 @@ public class Coordinate {
     public double getLat() {
         return lat;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%f; %f)", lon, lat);
+    }
 }

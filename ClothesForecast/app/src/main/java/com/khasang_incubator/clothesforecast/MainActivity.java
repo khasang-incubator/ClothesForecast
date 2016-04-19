@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.khasang_incubator.clothesforecast.helpers.Adviser;
+import com.khasang_incubator.clothesforecast.helpers.Calculator;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
 
@@ -49,15 +51,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onResponseReceived(String response) {
-        tvResponse.setText(response);
+        Adviser adviser = new Adviser();
+        Calculator calculator = new Calculator();
+
+        tvResponse.setText(adviser.getCollection(calculator.getEffectiveTemperature()));
 
         Gson gson = new Gson();
-        WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
-        Coordinate coordinate = weatherResponse.getCoord();
-        Logger.d(String.format("coord: (%f %f)", coordinate.getLon(), coordinate.getLat()));
-        Weather weather = weatherResponse.getWeather().get(0);
-        Logger.d(String.format("id: %d\nmain: %s\ndesc: %s\nicon: %s",
-                weather.getId(), weather.getMain(), weather.getDescription(), weather.getIcon()));
+//        WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
+//        Coordinate coordinate = weatherResponse.getCoord();
+//        Logger.d(String.format("coord: (%f %f)", coordinate.getLon(), coordinate.getLat()));
+//        Weather weather = weatherResponse.getWeather().get(0);
+//        Logger.d(String.format("id: %d\nmain: %s\ndesc: %s\nicon: %s",
+//                weather.getId(), weather.getMain(), weather.getDescription(), weather.getIcon()));
+
+        ForecastResponse forecastResponse = gson.fromJson(response, ForecastResponse.class);
+        City city = forecastResponse.getCity();
+        String cityName = city.getName();
+        Coordinate coordinate = city.getCoord();
+
+        Logger.d(String.format("Name: %s\nCoord: %s", cityName, coordinate.toString()));
     }
 
     private class FetchForecastTask extends AsyncTask<Void, Void, String> {
@@ -70,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            request = RequestMaker.getWeatherFor(cityName);
+            request = RequestMaker.getForecastFor(cityName);
         }
 
         @Override
