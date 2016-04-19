@@ -8,4 +8,5 @@
     <string name="weekday">Воскресенье, 17 апреля</string>
     <string name="holiday">Всемирный день гемофилии</string>
     <string name="recommendation">Рекомендуем:</string>
+    <string name="show_weather">показать погоду</string>
 </resources>

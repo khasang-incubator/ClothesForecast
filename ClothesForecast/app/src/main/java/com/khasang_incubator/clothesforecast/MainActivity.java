@@ -1,5 +1,6 @@
 package com.khasang_incubator.clothesforecast;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void onResponseReceived(String response) {
         tvResponse.setText(response);
+    }
+
+    public void Show_weather(View view) {
+        Intent intent = new Intent(MainActivity.this, ShowWeather.class);
+        startActivity(intent);
     }
 
     private class FetchForecastTask extends AsyncTask<String, Void, String> {
