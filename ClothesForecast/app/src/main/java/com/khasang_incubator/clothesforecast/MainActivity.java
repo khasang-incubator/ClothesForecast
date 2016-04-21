@@ -9,21 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.khasang_incubator.clothesforecast.helpers.Adviser;
-<<<<<<< HEAD
-import com.khasang_incubator.clothesforecast.helpers.CalcHelper;
-=======
-import com.khasang_incubator.clothesforecast.helpers.Calculator;
 import com.khasang_incubator.clothesforecast.helpers.Converter;
->>>>>>> develop
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
-import com.khasang_incubator.clothesforecast.parser.City;
-import com.khasang_incubator.clothesforecast.parser.Coordinate;
-import com.khasang_incubator.clothesforecast.parser.ForecastResponse;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -56,14 +46,6 @@ public class MainActivity extends AppCompatActivity {
         pBar = (ProgressBar) findViewById(R.id.progress_bar);
     }
 
-<<<<<<< HEAD
-    private void onResponseReceived(String response) {
-        Adviser adviser = new Adviser();
-        CalcHelper calculator = new CalcHelper();
-
-        tvResponse.setText(adviser.getCollection(calculator.getEffectiveTemperature(7.2, 65, 3, CalcHelper.MALE_MODIFIER)));
-        Logger.d(String.format("Effective temperature: %s", calculator.getEffectiveTemperature(6.7, 75, 3, CalcHelper.UNISEX_MODIFIER)));
-=======
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_fetch_weather:
@@ -73,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 new FetchTask(RequestMaker.TYPE_FORECAST, etCityName.getText().toString()).execute();
                 break;
         }
->>>>>>> develop
-
         pBar.setVisibility(View.VISIBLE);
         btnFetchWeather.setEnabled(false);
         btnFetchForecast.setEnabled(false);
