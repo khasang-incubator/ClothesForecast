@@ -43,7 +43,17 @@ public class CalcHelper {
         return dewPoint;
     }
 
-    public double getEffectiveTemperature(double airTempInCel, int relHumidity, double windSpeed){
+    public double getEffectiveTemperature(double airTempInCel, int relHumidity, double windSpeed, String sex){
+        sex = sex.trim().toLowerCase();
+        double sexModifer;
+        if (sex.equals("male")){
+            sexModifer = 1.04;
+        }else if (sex.equals("female")){
+            sexModifer = 1.0;
+        }else {
+            sexModifer = 1.02;
+        }
+
         if (airTempInCel < 1){
             this.dewPoint = 1;
         } else {
@@ -51,6 +61,6 @@ public class CalcHelper {
         }
         this.effTempHumidity = calcEffTempHumidity(airTempInCel, dewPoint);
         this.effTempWindSpeed = calcEffTempWindSpeed(airTempInCel, windSpeed);
-        return (effTempHumidity + effTempWindSpeed) / 2;
+        return ((effTempHumidity + effTempWindSpeed) / 2) * sexModifer;
     }
 }
