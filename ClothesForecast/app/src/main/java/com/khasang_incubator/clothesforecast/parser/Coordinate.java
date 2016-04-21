@@ -1,4 +1,4 @@
-package com.khasang_incubator.clothesforecast;
+package com.khasang_incubator.clothesforecast.parser;
 
 /**
  * Created by aleksandrlihovidov on 17.04.16.
@@ -13,5 +13,10 @@ public class Coordinate {
 
     public double getLat() {
         return lat;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%f; %f)", lon, lat);
     }
 }

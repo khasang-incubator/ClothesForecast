@@ -1,17 +1,25 @@
 package com.khasang_incubator.clothesforecast;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.khasang_incubator.clothesforecast.helpers.Adviser;
+import com.khasang_incubator.clothesforecast.helpers.Calculator;
+import com.khasang_incubator.clothesforecast.helpers.Converter;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
+import com.khasang_incubator.clothesforecast.parser.City;
+import com.khasang_incubator.clothesforecast.parser.Coordinate;
+import com.khasang_incubator.clothesforecast.parser.ForecastResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tvResponse;
     private EditText etCityName;
+    private Button btnFetchWeather;
+    private Button btnFetchForecast;
+    private ProgressBar pBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,41 +47,58 @@ public class MainActivity extends AppCompatActivity {
     private void initUI() {
         tvResponse = (TextView) findViewById(R.id.tvResponse);
         etCityName = (EditText) findViewById(R.id.etCityName);
-        ((Button) findViewById(R.id.btnFetch)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!etCityName.getText().toString().trim().isEmpty()) {
-                    new FetchForecastTask(etCityName.getText().toString()).execute();
-                } else {
-                    Toast.makeText(MainActivity.this, "Enter City Name", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        btnFetchWeather = (Button) findViewById(R.id.btn_fetch_weather);
+        btnFetchForecast = (Button) findViewById(R.id.btn_fetch_forecast);
+        pBar = (ProgressBar) findViewById(R.id.progress_bar);
     }
 
-    private void onResponseReceived(String response) {
-        tvResponse.setText(response);
-
-        Gson gson = new Gson();
-        WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
-        Coordinate coordinate = weatherResponse.getCoord();
-        Logger.d(String.format("coord: (%f %f)", coordinate.getLon(), coordinate.getLat()));
-        Weather weather = weatherResponse.getWeather().get(0);
-        Logger.d(String.format("id: %d\nmain: %s\ndesc: %s\nicon: %s",
-                weather.getId(), weather.getMain(), weather.getDescription(), weather.getIcon()));
-    }
-
-    private class FetchForecastTask extends AsyncTask<Void, Void, String> {
-        private String cityName;
-        private String request;
-
-        public FetchForecastTask(String cityName) {
-            this.cityName = cityName;
+    public void onButtonClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_fetch_weather:
+                new FetchTask(RequestMaker.TYPE_WEATHER, etCityName.getText().toString()).execute();
+                break;
+            case R.id.btn_fetch_forecast:
+                new FetchTask(RequestMaker.TYPE_FORECAST, etCityName.getText().toString()).execute();
+                break;
         }
 
-        @Override
-        protected void onPreExecute() {
-            request = RequestMaker.getWeatherFor(cityName);
+        pBar.setVisibility(View.VISIBLE);
+        btnFetchWeather.setEnabled(false);
+        btnFetchForecast.setEnabled(false);
+    }
+
+    private void onResponseReceived(int type, String response) {
+        pBar.setVisibility(View.GONE);
+
+        switch (type) {
+            case RequestMaker.TYPE_WEATHER:
+                tvResponse.setText(Converter.convertWeatherResponseToString(response));
+                btnFetchWeather.setBackgroundColor(Color.CYAN);
+                btnFetchForecast.setBackgroundColor(Color.TRANSPARENT);
+                break;
+            case RequestMaker.TYPE_FORECAST:
+                tvResponse.setText(Converter.convertForecastResponseToString(response));
+                btnFetchForecast.setBackgroundColor(Color.CYAN);
+                btnFetchWeather.setBackgroundColor(Color.TRANSPARENT);
+                break;
+            default:
+                tvResponse.setText(response);
+                btnFetchForecast.setBackgroundColor(Color.TRANSPARENT);
+                btnFetchWeather.setBackgroundColor(Color.TRANSPARENT);
+                break;
+        }
+
+        btnFetchWeather.setEnabled(true);
+        btnFetchForecast.setEnabled(true);
+    }
+
+    private class FetchTask extends AsyncTask<Void, Void, String> {
+        private int requestType;
+        private String request;
+
+        public FetchTask(int requestType, String cityName) {
+            this.requestType = requestType;
+            this.request = RequestMaker.getRequestStringFor(requestType, cityName);
         }
 
         @Override
@@ -81,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 Logger.d(response);
             } catch (IOException e) {
                 e.printStackTrace();
+                requestType = RequestMaker.ERROR;
                 response = "Something Wrong";
             }
             return response;
@@ -88,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            onResponseReceived(s);
+            onResponseReceived(requestType, s);
         }
 
         private byte[] getUrlBytes(String urlSpec) throws IOException {
