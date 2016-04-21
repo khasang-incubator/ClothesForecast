@@ -3,6 +3,9 @@ package com.khasang_incubator.clothesforecast.helpers;
 import java.lang.Math;
 
 public class CalcHelper {
+    public static final String MALE_MODIFIER = "male";
+    public static final String FEMALE_MODIFIER = "female";
+    public static final String UNISEX_MODIFIER = "unisex";
 
     private double effTempHumidity;
     private double effTempWindSpeed;
@@ -45,13 +48,14 @@ public class CalcHelper {
 
     public double getEffectiveTemperature(double airTempInCel, int relHumidity, double windSpeed, String sex){
         sex = sex.trim().toLowerCase();
-        double sexModifer;
-        if (sex.equals("male")){
-            sexModifer = 1.04;
-        }else if (sex.equals("female")){
-            sexModifer = 1.0;
-        }else {
-            sexModifer = 1.02;
+        double sexModifier = 0;
+
+        if (sex.equals(CalcHelper.MALE_MODIFIER)){
+            sexModifier = 1.04;
+        }else if (sex.equals(CalcHelper.FEMALE_MODIFIER)){
+            sexModifier = 1.0;
+        }else if (sex.equals(CalcHelper.UNISEX_MODIFIER)){
+            sexModifier = 1.02;
         }
 
         if (airTempInCel < 1){
@@ -61,6 +65,6 @@ public class CalcHelper {
         }
         this.effTempHumidity = calcEffTempHumidity(airTempInCel, dewPoint);
         this.effTempWindSpeed = calcEffTempWindSpeed(airTempInCel, windSpeed);
-        return ((effTempHumidity + effTempWindSpeed) / 2) * sexModifer;
+        return ((effTempHumidity + effTempWindSpeed) / 2) * sexModifier;
     }
 }

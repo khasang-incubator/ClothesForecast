@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         Adviser adviser = new Adviser();
         CalcHelper calculator = new CalcHelper();
 
-        tvResponse.setText(adviser.getCollection(calculator.getEffectiveTemperature(7.2, 65, 3)));
-        Logger.d(String.format("Effective temperature: %s", calculator.getEffectiveTemperature(6.7, 75, 3)));
+        tvResponse.setText(adviser.getCollection(calculator.getEffectiveTemperature(7.2, 65, 3, CalcHelper.MALE_MODIFIER)));
+        Logger.d(String.format("Effective temperature: %s", calculator.getEffectiveTemperature(6.7, 75, 3, CalcHelper.UNISEX_MODIFIER)));
 
         Gson gson = new Gson();
 //        WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
