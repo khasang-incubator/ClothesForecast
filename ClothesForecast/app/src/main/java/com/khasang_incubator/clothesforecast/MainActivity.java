@@ -14,6 +14,9 @@ import com.khasang_incubator.clothesforecast.helpers.Adviser;
 import com.khasang_incubator.clothesforecast.helpers.Calculator;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
+import com.khasang_incubator.clothesforecast.parser.City;
+import com.khasang_incubator.clothesforecast.parser.Coordinate;
+import com.khasang_incubator.clothesforecast.parser.ForecastResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

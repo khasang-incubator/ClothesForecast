@@ -1,4 +1,4 @@
-package com.khasang_incubator.clothesforecast;
+package com.khasang_incubator.clothesforecast.parser;
 
 /**
  * Created by aleksandrlihovidov on 19.04.16.
