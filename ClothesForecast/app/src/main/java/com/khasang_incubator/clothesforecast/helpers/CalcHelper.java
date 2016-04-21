@@ -50,12 +50,16 @@ public class CalcHelper {
         sex = sex.trim().toLowerCase();
         double sexModifier = 0;
 
-        if (sex.equals(CalcHelper.MALE_MODIFIER)){
-            sexModifier = 1.04;
-        }else if (sex.equals(CalcHelper.FEMALE_MODIFIER)){
-            sexModifier = 1.0;
-        }else if (sex.equals(CalcHelper.UNISEX_MODIFIER)){
-            sexModifier = 1.02;
+        switch (sex) {
+            case MALE_MODIFIER:
+                sexModifier = 1.04;
+                break;
+            case FEMALE_MODIFIER:
+                sexModifier = 1.0;
+                break;
+            case UNISEX_MODIFIER:
+                sexModifier = 1.02;
+                break;
         }
 
         if (airTempInCel < 1){
