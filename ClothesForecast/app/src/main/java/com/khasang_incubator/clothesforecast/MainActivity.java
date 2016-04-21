@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private void initUI() {
         tvResponse = (TextView) findViewById(R.id.tvResponse);
         etCityName = (EditText) findViewById(R.id.etCityName);
-        ((Button) findViewById(R.id.btnFetch)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.btn_fetch_weather)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!etCityName.getText().toString().trim().isEmpty()) {
-                    new FetchForecastTask(etCityName.getText().toString()).execute();
+                    new FetchTask(etCityName.getText().toString()).execute();
                 } else {
                     Toast.makeText(MainActivity.this, "Enter City Name", Toast.LENGTH_SHORT).show();
                 }
@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
         Logger.d(String.format("Name: %s\nCoord: %s", cityName, coordinate.toString()));
     }
 
-    private class FetchForecastTask extends AsyncTask<Void, Void, String> {
+    private class FetchTask extends AsyncTask<Void, Void, String> {
         private String cityName;
         private String request;
 
-        public FetchForecastTask(String cityName) {
+        public FetchTask(String cityName) {
             this.cityName = cityName;
         }
 
