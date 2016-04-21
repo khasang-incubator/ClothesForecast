@@ -8,8 +8,7 @@ public class CalcHelper {
     public static final String UNISEX_MODIFIER = "unisex";
 
     private double effTempHumidity;
-    private double effTempWindSpeed;
-    private double dewPoint; //На данном этапе отдельно переменная не нужна, но может пригодится в будущем для определения "духоты"
+    private double dewPoint;
 
     private double convertCelToFar(double airTempInCel){
         return airTempInCel * (9 / 5) + 32;
@@ -67,8 +66,9 @@ public class CalcHelper {
         } else {
             this.dewPoint = calcDewPoint(airTempInCel, (double) relHumidity);
         }
+
         this.effTempHumidity = calcEffTempHumidity(airTempInCel, dewPoint);
-        this.effTempWindSpeed = calcEffTempWindSpeed(airTempInCel, windSpeed);
+        double effTempWindSpeed = calcEffTempWindSpeed(airTempInCel, windSpeed);
         return ((effTempHumidity + effTempWindSpeed) / 2) * sexModifier;
     }
 }

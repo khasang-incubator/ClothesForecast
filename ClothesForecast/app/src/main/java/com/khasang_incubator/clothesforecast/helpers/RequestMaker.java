@@ -12,6 +12,7 @@ public class RequestMaker {
     private final static String WEATHER = "/weather";
     private final static String FORECAST = "/forecast";
     private final static String MODE = "json";
+    private static final String UNITS = "metric";
 
     public static final String getWeatherFor(String cityName) {
         return getRequestFor(cityName, WEATHER);
@@ -28,6 +29,7 @@ public class RequestMaker {
 //                .appendQueryParameter("cnt", Integer.toString(3))
                 .appendQueryParameter("lang", Locale.getDefault().toString())
                 .appendQueryParameter("APPID", AppVariables.API_KEY)
+                .appendQueryParameter("units", UNITS)
                 .build().toString();
         Logger.d(request);
         return request;
