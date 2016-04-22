@@ -2,6 +2,8 @@ package com.khasang_incubator.clothesforecast.helpers;
 
 import android.net.Uri;
 
+import com.khasang_incubator.clothesforecast.secure.AppVariables;
+
 import java.util.Locale;
 
 /**
