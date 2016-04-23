@@ -1,10 +1,7 @@
 package com.khasang_incubator.clothesforecast;
 
-<<<<<<< HEAD
-import android.graphics.Color;
-=======
 import android.content.Intent;
->>>>>>> 5422f9b6ad5c04c7a32db5312f1f8c5ce63bd270
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +14,6 @@ import android.widget.TextView;
 import com.khasang_incubator.clothesforecast.helpers.Converter;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -89,7 +85,11 @@ public class MainActivity extends AppCompatActivity {
         btnFetchForecast.setEnabled(true);
     }
 
-<<<<<<< HEAD
+    public void Show_weather(View view) {
+        Intent intent = new Intent(MainActivity.this, ShowWeather.class);
+        startActivity(intent);
+    }
+
     private class FetchTask extends AsyncTask<Void, Void, String> {
         private int requestType;
         private String request;
@@ -98,14 +98,6 @@ public class MainActivity extends AppCompatActivity {
             this.requestType = requestType;
             this.request = RequestMaker.getRequestStringFor(requestType, cityName);
         }
-=======
-    public void Show_weather(View view) {
-        Intent intent = new Intent(MainActivity.this, ShowWeather.class);
-        startActivity(intent);
-    }
-
-    private class FetchForecastTask extends AsyncTask<String, Void, String> {
->>>>>>> 5422f9b6ad5c04c7a32db5312f1f8c5ce63bd270
 
         @Override
         protected String doInBackground(Void... params) {
