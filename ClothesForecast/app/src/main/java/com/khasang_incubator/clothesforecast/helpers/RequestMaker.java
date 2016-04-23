@@ -17,6 +17,7 @@ public class RequestMaker {
     private final static String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     private final static String WEATHER = "weather";
     private final static String FORECAST = "forecast";
+    private static final String UNITS = "metric";
 
     public static String getRequestStringFor(int type, String cityName) {
         String requestType = WEATHER;
@@ -31,6 +32,7 @@ public class RequestMaker {
         String request = Uri.parse(BASE_URL + requestType).buildUpon()
                 .appendQueryParameter("q", cityName)
                 .appendQueryParameter("APPID", AppVariables.API_KEY)
+                .appendQueryParameter("units", UNITS)
                 .appendQueryParameter("lang", Locale.getDefault().getLanguage())
                 .build().toString();
 

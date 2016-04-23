@@ -1,5 +1,6 @@
 package com.khasang_incubator.clothesforecast;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,17 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.khasang_incubator.clothesforecast.helpers.Adviser;
-import com.khasang_incubator.clothesforecast.helpers.Calculator;
 import com.khasang_incubator.clothesforecast.helpers.Converter;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
-import com.khasang_incubator.clothesforecast.parser.City;
-import com.khasang_incubator.clothesforecast.parser.Coordinate;
-import com.khasang_incubator.clothesforecast.parser.ForecastResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -61,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 new FetchTask(RequestMaker.TYPE_FORECAST, etCityName.getText().toString()).execute();
                 break;
         }
-
         pBar.setVisibility(View.VISIBLE);
         btnFetchWeather.setEnabled(false);
         btnFetchForecast.setEnabled(false);
@@ -90,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
         btnFetchWeather.setEnabled(true);
         btnFetchForecast.setEnabled(true);
+    }
+
+    public void Show_weather(View view) {
+        Intent intent = new Intent(MainActivity.this, ShowWeather.class);
+        startActivity(intent);
     }
 
     private class FetchTask extends AsyncTask<Void, Void, String> {
