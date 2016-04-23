@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Clothes Forecast</string>
+    <string name="tv_city">City</string>
+    <string name="tv_description_weather">Легкий бриз, тепло и свежо</string>
+    <string name="wind">ветер 14 м/с</string>
+    <string name="humidity">Влажность 35%</string>
+    <string name="temperature">+ 14° C</string>
+    <string name="weekday">Воскресенье, 17 апреля</string>
+    <string name="holiday">Всемирный день гемофилии</string>
+    <string name="recommendation">Рекомендуем:</string>
+    <string name="show_weather">показать погоду</string>
 </resources>
