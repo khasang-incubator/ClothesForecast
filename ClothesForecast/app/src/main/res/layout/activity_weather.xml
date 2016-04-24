@@ -1,113 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorMilk">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWine">
+
+    <android.support.v4.widget.Space
+        android:id="@+id/space_separator"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_centerInParent="true"/>
 
     <RelativeLayout
         android:id="@+id/rl_weather"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/colorTurquoise">
+        android:layout_height="match_parent"
+        android:layout_above="@id/space_separator"
+        android:background="@color/colorTurquoise"
+        android:padding="8dp">
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_information"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_32"
-            android:layout_marginTop="@dimen/activity_vertical_margin_16"
-            android:hint="@string/tv_city"
-            android:textColor="@color/colorMilk" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_weekday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weekday"
+                android:textColor="@color/colorMilk"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/holiday"
+                android:textColor="@color/colorMilk"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/editText"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_64"
-            android:layout_marginTop="@dimen/activity_vertical_margin_16"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/ll_information"
+            android:layout_marginRight="@dimen/activity_horizontal_margin_16"
             android:text="@string/temperature"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/colorMilk"
-            android:textSize="@dimen/text_Size_36" />
+            android:textSize="@dimen/text_Size_36"/>
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_information"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/tv_temperature"
+            android:hint="@string/tv_city"
+            android:textColor="@color/colorMilk"/>
+
+        <LinearLayout
+            android:id="@+id/ll_weather_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_wind"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/wind"
+                android:textColor="@color/colorMilk"/>
+
+            <TextView
+                android:id="@+id/tv_humidity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/humidity"
+                android:textColor="@color/colorMilk"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_description_weather"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tv_temperature"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_32"
-            android:layout_marginTop="@dimen/activity_vertical_margin_16"
+            android:layout_above="@id/ll_weather_detail"
+            android:layout_below="@id/tv_temperature"
+            android:layout_margin="8dp"
+            android:gravity="center"
             android:text="@string/tv_description_weather"
             android:textColor="@color/colorMilk"
-            android:textSize="@dimen/text_Size_20" />
-
-        <TextView
-            android:id="@+id/tv_wind"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tv_description_weather"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_32"
-            android:layout_marginTop="@dimen/activity_horizontal_margin_32"
-            android:text="@string/wind"
-            android:textColor="@color/colorMilk" />
-
-        <TextView
-            android:id="@+id/tv_humidity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/tv_wind"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_32"
-            android:text="@string/humidity"
-            android:textColor="@color/colorMilk" />
-
-        <TextView
-            android:id="@+id/tv_weekday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/editText"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_32"
-            android:text="@string/weekday"
-            android:textColor="@color/colorMilk" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_weekday"
-            android:layout_alignStart="@+id/tv_weekday"
-            android:layout_below="@+id/tv_weekday"
-            android:text="@string/holiday"
-            android:textColor="@color/colorMilk" />
-
+            android:textSize="@dimen/text_Size_20"/>
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_separator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_weather"
-        android:background="@color/colorWine" />
-
 
     <RelativeLayout
         android:id="@+id/rl_clothes"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@id/tv_separator"
+        android:layout_height="match_parent"
+        android:layout_below="@id/space_separator"
         android:background="@color/colorMustard">
 
         <TextView
@@ -116,147 +120,141 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin_16"
             android:layout_marginTop="@dimen/activity_horizontal_margin_16"
+            android:text="@string/recommendation"
             android:textColor="@color/colorWine"
-            android:textSize="@dimen/text_Size_20"
-            android:text="@string/recommendation" />
+            android:textSize="@dimen/text_Size_20"/>
 
         <ImageButton
+            android:id="@+id/im_renew1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/im_renew1"
-            android:background="@color/colorMustard"
-            android:src="@drawable/ic_autorenew_white_36dp"
             android:layout_below="@+id/tv_recommendation"
             android:layout_marginLeft="@dimen/activity_horizontal_margin_16"
             android:layout_marginTop="@dimen/activity_vertical_margin_4"
-
-            />
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_autorenew_white_36dp"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ib_renew2"
-            android:background="@color/colorMustard"
-            android:src="@drawable/ic_autorenew_white_36dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_16"
-            android:layout_marginTop="@dimen/activity_vertical_margin_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/im_renew1"
-            />
+            android:layout_marginLeft="@dimen/activity_horizontal_margin_16"
+            android:layout_marginTop="@dimen/activity_vertical_margin_4"
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_autorenew_white_36dp"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ib_renew3"
-            android:background="@color/colorMustard"
-            android:src="@drawable/ic_autorenew_white_36dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_16"
-            android:layout_marginTop="@dimen/activity_vertical_margin_4"
-            android:layout_centerVertical="true"
-           android:layout_below="@id/ib_renew2"
-            />
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ib_renew4"
-            android:background="@color/colorMustard"
-            android:src="@drawable/ic_autorenew_white_36dp"
+            android:layout_below="@id/ib_renew2"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin_16"
             android:layout_marginTop="@dimen/activity_vertical_margin_4"
-            android:layout_centerVertical="true"
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_autorenew_white_36dp"/>
+
+        <ImageButton
+            android:id="@+id/ib_renew4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/ib_renew3"
-            />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin_16"
+            android:layout_marginTop="@dimen/activity_vertical_margin_4"
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_autorenew_white_36dp"/>
 
         <TextView
+            android:id="@+id/tv_recommendation1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Панама"
-            android:textColor="@color/colorGreen"
-            android:id="@+id/tv_recommendation1"
             android:layout_alignBottom="@+id/im_renew1"
             android:layout_alignLeft="@+id/tv_recommendation2"
-            android:layout_alignStart="@+id/tv_recommendation2" />
+            android:layout_alignStart="@+id/tv_recommendation2"
+            android:text="Панама"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorGreen"/>
 
         <TextView
+            android:id="@+id/tv_recommendation2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Рубашка"
-            android:id="@+id/tv_recommendation2"
-            android:textColor="@color/colorGreen"
             android:layout_above="@+id/ib_renew3"
             android:layout_alignLeft="@+id/tv_recommendation3"
-            android:layout_alignStart="@+id/tv_recommendation3" />
+            android:layout_alignStart="@+id/tv_recommendation3"
+            android:text="Рубашка"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorGreen"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Юбка"
-            android:textColor="@color/colorGreen"
-            android:layout_marginLeft="@dimen/activity_vertical_margin_32"
             android:id="@+id/tv_recommendation3"
-            android:layout_alignBottom="@+id/ib_renew3"
-            android:layout_toRightOf="@+id/ib_renew3"
-            android:layout_toEndOf="@+id/ib_renew3" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ib_renew3"
+            android:layout_marginLeft="@dimen/activity_vertical_margin_32"
+            android:layout_toEndOf="@+id/ib_renew3"
+            android:layout_toRightOf="@+id/ib_renew3"
+            android:text="Юбка"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Кеды"
-            android:textColor="@color/colorGreen"
+            android:textColor="@color/colorGreen"/>
+
+        <TextView
             android:id="@+id/tv_recommendation4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/ib_renew4"
             android:layout_alignLeft="@+id/tv_recommendation3"
-            android:layout_alignStart="@+id/tv_recommendation3" />
-
+            android:layout_alignStart="@+id/tv_recommendation3"
+            android:text="Кеды"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorGreen"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ib_favorite1"
-            android:background="@color/colorMustard"
-            android:layout_marginRight="@dimen/activity_vertical_margin_16"
-            android:src="@drawable/ic_favorite_white_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/ib_renew2"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_marginRight="@dimen/activity_vertical_margin_16"
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_favorite_white_24dp"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ib_favorite2"
-            android:layout_marginRight="@dimen/activity_vertical_margin_16"
-            android:background="@color/colorMustard"
-            android:src="@drawable/ic_favorite_border_white_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tv_recommendation2"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_marginRight="@dimen/activity_vertical_margin_16"
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_favorite_border_white_24dp"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/ib_favorite3"
-            android:background="@color/colorMustard"
-            android:layout_marginRight="@dimen/activity_vertical_margin_16"
-            android:src="@drawable/ic_favorite_white_24dp"
-            android:layout_alignBottom="@+id/tv_recommendation3"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ib_favorite4"
-            android:background="@color/colorMustard"
-            android:layout_marginRight="@dimen/activity_vertical_margin_16"
-            android:src="@drawable/ic_favorite_border_white_24dp"
-            android:layout_alignBottom="@+id/tv_recommendation4"
+            android:layout_alignBottom="@+id/tv_recommendation3"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_marginRight="@dimen/activity_vertical_margin_16"
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_favorite_white_24dp"/>
 
+        <ImageButton
+            android:id="@+id/ib_favorite4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_recommendation4"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/activity_vertical_margin_16"
+            android:background="@color/colorMustard"
+            android:src="@drawable/ic_favorite_border_white_24dp"/>
 
     </RelativeLayout>
+
 </RelativeLayout>
