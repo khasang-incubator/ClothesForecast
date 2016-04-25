@@ -20,14 +20,7 @@ public class RequestMaker {
     private static final String UNITS = "metric";
 
     public static String getRequestStringFor(int type, String cityName) {
-        String requestType = WEATHER;
-        switch (type) {
-            case TYPE_FORECAST:
-                requestType = FORECAST;
-                break;
-            default:
-                break;
-        }
+        String requestType = type == TYPE_FORECAST ? FORECAST : WEATHER;
 
         String request = Uri.parse(BASE_URL + requestType).buildUpon()
                 .appendQueryParameter("q", cityName)

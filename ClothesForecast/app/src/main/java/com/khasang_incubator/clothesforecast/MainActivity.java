@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -49,15 +50,20 @@ public class MainActivity extends AppCompatActivity {
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_fetch_weather:
-                new FetchTask(RequestMaker.TYPE_WEATHER, etCityName.getText().toString()).execute();
+                new FetchTask(RequestMaker.TYPE_WEATHER, getCityName()).execute();
                 break;
             case R.id.btn_fetch_forecast:
-                new FetchTask(RequestMaker.TYPE_FORECAST, etCityName.getText().toString()).execute();
+                new FetchTask(RequestMaker.TYPE_FORECAST, getCityName()).execute();
                 break;
         }
         pBar.setVisibility(View.VISIBLE);
         btnFetchWeather.setEnabled(false);
         btnFetchForecast.setEnabled(false);
+    }
+
+    @NonNull
+    private String getCityName() {
+        return etCityName.getText().toString();
     }
 
     private void onResponseReceived(int type, String response) {
