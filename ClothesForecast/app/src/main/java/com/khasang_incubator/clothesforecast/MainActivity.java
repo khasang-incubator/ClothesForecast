@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.khasang_incubator.clothesforecast.database.Wardrobe;
+import com.khasang_incubator.clothesforecast.helpers.Adviser;
 import com.khasang_incubator.clothesforecast.helpers.Converter;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnFetchForecast;
     private ProgressBar pBar;
 
+    private Adviser adviser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         initUI();
 
+        adviser = new Adviser(new Wardrobe(this));
     }
 
     private void initUI() {
@@ -71,7 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch (type) {
             case RequestMaker.TYPE_WEATHER:
-                tvResponse.setText(Converter.convertWeatherResponseToString(response));
+                tvResponse.setText(
+                        String.format(
+                                "%s\n%s",
+                                Converter.convertWeatherResponseToString(response),
+                                adviser.getCollection(10.0))
+                );
                 btnFetchWeather.setBackgroundColor(Color.CYAN);
                 btnFetchForecast.setBackgroundColor(Color.TRANSPARENT);
                 break;
