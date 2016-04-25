@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         btnFetchForecast.setEnabled(true);
     }
 
-    public void Show_weather(View view) {
+    public void showWeather(View view) {
         Intent intent = new Intent(MainActivity.this, ShowWeather.class);
         startActivity(intent);
     }
