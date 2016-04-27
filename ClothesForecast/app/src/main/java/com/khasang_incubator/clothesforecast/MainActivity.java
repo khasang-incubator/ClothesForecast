@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.khasang_incubator.clothesforecast.database.Wardrobe;
 import com.khasang_incubator.clothesforecast.helpers.Adviser;
@@ -53,12 +54,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onButtonClick(View view) {
+        String city = getCityName();
+        if (city.isEmpty()) {
+            Toast.makeText(this,"Введите город",Toast.LENGTH_SHORT).show();
+            return;
+        }
         switch (view.getId()) {
             case R.id.btn_fetch_weather:
-                new FetchTask(RequestMaker.TYPE_WEATHER, getCityName()).execute();
+                new FetchTask(RequestMaker.TYPE_WEATHER, city).execute();
                 break;
             case R.id.btn_fetch_forecast:
-                new FetchTask(RequestMaker.TYPE_FORECAST, getCityName()).execute();
+                new FetchTask(RequestMaker.TYPE_FORECAST, city).execute();
                 break;
         }
         pBar.setVisibility(View.VISIBLE);
