@@ -43,12 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Adviser adviser;
 
-    private GoogleApiClient client;
-    private double Temp;
-    private int Humidity;
-    private double Wind;
-    private String sex;
-    private double TempE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,22 +93,22 @@ public class MainActivity extends AppCompatActivity {
         switch (type) {
             case RequestMaker.TYPE_WEATHER:
                 WeatherResponse weatherResponse = gson.fromJson(response,WeatherResponse.class);
-                Temp = weatherResponse.getMain().getTemp();
-                Humidity = weatherResponse.getMain().getHumidity();
-                Wind = weatherResponse.getWind().getSpeed();
-                sex = "female";
+                double temp = weatherResponse.getMain().getTemp();
+                int humidity = weatherResponse.getMain().getHumidity();
+                double wind = weatherResponse.getWind().getSpeed();
+                String sex = "female";
                 CalcHelper calcHelper = new CalcHelper();
-                TempE = calcHelper.getEffectiveTemperature(Temp,Humidity,Wind,sex);
+                double tempE = calcHelper.getEffectiveTemperature(temp,humidity,wind,sex);
                 tvResponse.setText(
                         String.format(
                                 "%s\n%s",
                                 Converter.convertWeatherResponseToString(response),
-                                adviser.getCollection(TempE))
+                                adviser.getCollection(tempE))
                 );
-                Logger.d(String.valueOf(Temp));
-                Logger.d(String.valueOf(Humidity));
-                Logger.d(String.valueOf(Wind));
-                Logger.d(String.valueOf(TempE));
+                Logger.d(String.valueOf(temp));
+                Logger.d(String.valueOf(humidity));
+                Logger.d(String.valueOf(wind));
+                Logger.d(String.valueOf(tempE));
                 btnFetchWeather.setBackgroundColor(Color.CYAN);
                 btnFetchForecast.setBackgroundColor(Color.TRANSPARENT);
                 break;
