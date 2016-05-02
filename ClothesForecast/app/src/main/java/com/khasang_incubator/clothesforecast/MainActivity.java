@@ -14,9 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+//import com.google.android.gms.appindexing.Action;
+//import com.google.android.gms.appindexing.AppIndex;
+//import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.khasang_incubator.clothesforecast.database.Wardrobe;
 import com.khasang_incubator.clothesforecast.helpers.Adviser;
@@ -92,13 +92,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch (type) {
             case RequestMaker.TYPE_WEATHER:
-                WeatherResponse weatherResponse = gson.fromJson(response,WeatherResponse.class);
+                WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
                 double temp = weatherResponse.getMain().getTemp();
                 int humidity = weatherResponse.getMain().getHumidity();
                 double wind = weatherResponse.getWind().getSpeed();
-                String sex = "female";
                 CalcHelper calcHelper = new CalcHelper();
-                double tempE = calcHelper.getEffectiveTemperature(temp,humidity,wind,sex);
+                double tempE = calcHelper.getEffectiveTemperature(temp, humidity, wind, CalcHelper.FEMALE_MODIFIER);
                 tvResponse.setText(
                         String.format(
                                 "%s\n%s",
