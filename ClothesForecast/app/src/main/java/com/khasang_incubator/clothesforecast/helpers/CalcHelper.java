@@ -41,7 +41,7 @@ public class CalcHelper {
 
     private double calcDewPoint(double airTempInCel, double relHumidity){
         double funcTempAndHum = (Math.log(relHumidity/100) + (17.27 * airTempInCel / 237.3 + airTempInCel)) / 17.27;
-        this.dewPoint = (237.3 * funcTempAndHum) / (1 - funcTempAndHum);
+        this.dewPoint = (237.3 * funcTempAndHum) / (17.27 - funcTempAndHum);
         return dewPoint;
     }
 
@@ -64,7 +64,7 @@ public class CalcHelper {
         if (airTempInCel < 1){
             this.dewPoint = 1;
         } else {
-            this.dewPoint = calcDewPoint(airTempInCel, (double) relHumidity);
+            dewPoint = calcDewPoint(airTempInCel, (double) relHumidity);
         }
 
         this.effTempHumidity = calcEffTempHumidity(airTempInCel, dewPoint);

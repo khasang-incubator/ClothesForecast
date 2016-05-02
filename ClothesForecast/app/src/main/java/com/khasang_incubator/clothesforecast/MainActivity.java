@@ -2,6 +2,7 @@ package com.khasang_incubator.clothesforecast;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +14,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//import com.google.android.gms.appindexing.Action;
+//import com.google.android.gms.appindexing.AppIndex;
+//import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
 import com.khasang_incubator.clothesforecast.database.Wardrobe;
 import com.khasang_incubator.clothesforecast.helpers.Adviser;
+import com.khasang_incubator.clothesforecast.helpers.CalcHelper;
 import com.khasang_incubator.clothesforecast.helpers.Converter;
 import com.khasang_incubator.clothesforecast.helpers.Logger;
 import com.khasang_incubator.clothesforecast.helpers.RequestMaker;
+import com.khasang_incubator.clothesforecast.parser.MainInformation;
+import com.khasang_incubator.clothesforecast.parser.WeatherResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Adviser adviser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         initUI();
 
         adviser = new Adviser(new Wardrobe(this));
-    }
+  }
 
     private void initUI() {
         tvResponse = (TextView) findViewById(R.id.tvResponse);
@@ -56,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public void onButtonClick(View view) {
         String city = getCityName();
         if (city.isEmpty()) {
-            Toast.makeText(this,"Введите город",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Введите город", Toast.LENGTH_SHORT).show();
             return;
         }
         switch (view.getId()) {
@@ -79,15 +88,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void onResponseReceived(int type, String response) {
         pBar.setVisibility(View.GONE);
+        Gson gson = new Gson();
 
         switch (type) {
             case RequestMaker.TYPE_WEATHER:
+                WeatherResponse weatherResponse = gson.fromJson(response, WeatherResponse.class);
+                double temp = weatherResponse.getMain().getTemp();
+                int humidity = weatherResponse.getMain().getHumidity();
+                double wind = weatherResponse.getWind().getSpeed();
+                CalcHelper calcHelper = new CalcHelper();
+                double tempE = calcHelper.getEffectiveTemperature(temp, humidity, wind, CalcHelper.FEMALE_MODIFIER);
                 tvResponse.setText(
                         String.format(
                                 "%s\n%s",
                                 Converter.convertWeatherResponseToString(response),
-                                adviser.getCollection(10.0))
+                                adviser.getCollection(tempE))
                 );
+                Logger.d(String.valueOf(temp));
+                Logger.d(String.valueOf(humidity));
+                Logger.d(String.valueOf(wind));
+                Logger.d(String.valueOf(tempE));
                 btnFetchWeather.setBackgroundColor(Color.CYAN);
                 btnFetchForecast.setBackgroundColor(Color.TRANSPARENT);
                 break;
